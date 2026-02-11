@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { type } from "os";
 
 const userSchema = new mongoose.Schema({
     name : {
@@ -19,7 +18,7 @@ const userSchema = new mongoose.Schema({
         match : [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,"Please provide a valid email"]
     },
     password : {
-        type : true,
+        type : String,
         required : [true,'Password is required'],
         minLength : [8,"Password must be 8 characters long"],
         select : false
@@ -30,7 +29,7 @@ const userSchema = new mongoose.Schema({
             values : ['student','instructor','admin'],
             message : "Please select a valid role"
         },
-        default : student
+        default : 'student'
     },
     avatar : {
         type : String,
@@ -61,7 +60,7 @@ const userSchema = new mongoose.Schema({
         default : Date.now()
     }
 },{
-    timeseries : true,
+    timestamps : true,
     toJSON : {virtuals : true},
     toObject : {virtuals : true}
 })
@@ -92,13 +91,13 @@ userSchema.methods.getResetPasswordToken = function(){
 
 userSchema.methods.updateLastActive = function(){
     this.lastActive = Date.now()
-    return this.lastActive({validateBeforeSave : false})
+    return this.save({validateBeforeSave : false})
 }
 
 // virtual field for total enrolled courses
 
 userSchema.virtual('totalEnrolledCourses').get(function(){
-    return this.enrolledCourses.length
+    return this.enrolledCourses?.length
 })
 
 export const User = mongoose.model("User",userSchema)
