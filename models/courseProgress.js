@@ -81,4 +81,6 @@ courseSchema.pre('save', function(next){
     next()
 })
 
+// assignment calculate who is the user, what's the rating and what's the comment
+
 export const Course = mongoose.model('Course',courseSchema)
