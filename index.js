@@ -7,6 +7,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp"
 import cookieParser from "cookie-parser"
 import cors from cors
+import healthRoute from './routes/health.route.js'
 
 dotenv.config()
 const app = express()
@@ -59,6 +60,8 @@ app.use(cors({
 }))
 
 //Api Routes
+
+app.use('/health',healthRoute)
 
 //Body parser middleware
 app.use(express.json({limit:'10kb'}))
