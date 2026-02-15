@@ -8,6 +8,7 @@ import hpp from "hpp"
 import cookieParser from "cookie-parser"
 import cors from cors
 import healthRoute from './routes/health.route.js'
+import userRoute from './routes/user.route.js'
 
 dotenv.config()
 const app = express()
@@ -62,6 +63,7 @@ app.use(cors({
 //Api Routes
 
 app.use('/health',healthRoute)
+app.use('/api/v1/user',userRoute)
 
 //Body parser middleware
 app.use(express.json({limit:'10kb'}))
