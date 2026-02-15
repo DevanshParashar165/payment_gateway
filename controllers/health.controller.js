@@ -2,10 +2,10 @@ import { getDBStatus } from "../database/db"
 
 export const healthCheck = async(req,res)=>{
     try {
-        const db = getDBStatus();
+        const dbStatus = getDBStatus();
     
         const healthStatus = {
-            dbStatus : 'OK',
+            status : 'OK',
             timeStamp : new Date().toISOString(),
             services : {
                 database : {
